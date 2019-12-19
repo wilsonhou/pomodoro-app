@@ -3,6 +3,7 @@ class Timer {
         // from DOM accepts the Counter <h1> and the start button <button>
         this.timerCounter = timerCounter;
         this.timerStartButton = timerStartButton;
+        this.started = false;
 
         // store time left in seconds to this.timeLeft
         this.timeLeft = this.toSeconds(this.timerCounter.innerText);
@@ -10,7 +11,10 @@ class Timer {
         this.timerStartButton.addEventListener('click', this.start);
     }
     start = () => {
+        if (this.started) return;
+        this.started = true;
         // calls tick until value of timeLeft is 0
+        this.tick();
         this.intervalID = setInterval(this.tick, 1000);
 
         this.finish();
@@ -25,6 +29,7 @@ class Timer {
     finish = () => {
         // TODO: refactor into promise format??? Used when finished
         console.log('FINISHED!!!');
+        started = false;
     };
     toSeconds = (text) => {
         // toSeconds will translate display text to seconds

@@ -1,7 +1,10 @@
-* {
+*,
+*::before,
+*::after {
     padding: 0;
     margin: 0;
     box-sizing: inherit;
+    font-weight: inherit;
 }
 
 html {
@@ -11,5 +14,52 @@ html {
 
 body {
     font-family: Lato, sans-serif;
+    font-weight: 100;
     text-align: center;
+    background: linear-gradient(to right bottom, #36aeff, #78ffc4);
+    height: 100vh;
+    color: white;
+}
+
+.app {
+    /* background-color: red; */
+    position: relative;
+    top: 10%;
+    width: 50%;
+    height: 60vh;
+    margin: 0 auto;
+}
+
+.app__heading-phrase {
+    /* background-color: green; */
+    animation: fadeIn 2s;
+    width: 25rem;
+    position: relative;
+    margin: 0 auto;
+    font-size: 6rem;
+}
+
+.timer {
+    /* background-color: black; */
+    animation: fadeIn 2s;
+    position: relative;
+    top: 20%;
+}
+
+h1.timer__counter {
+    /* background-color: orange; */
+    font-size: 10rem;
+}
+
+.btn {
+    text-decoration: none;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
