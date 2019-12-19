@@ -5,31 +5,46 @@ class Timer {
         this.timerStartButton = timerStartButton;
         this.started = false;
 
+        // initialise event objects to fire
+        this.startEvent = new Event('timerStart');
+        this.finishEvent = new Event('timerFinish');
+
         // store time left in seconds to this.timeLeft
         this.timeLeft = this.toSeconds(this.timerCounter.innerText);
+        this.initialTime = this.timeLeft;
 
+        // TODO: Make timer reuseable
         this.timerStartButton.addEventListener('click', this.start);
     }
     start = () => {
         if (this.started) return;
         this.started = true;
+        console.log('CALLED START');
+
+        // dispatch start event on button
+        this.timerStartButton.dispatchEvent(this.startEvent);
+
         // calls tick until value of timeLeft is 0
         this.tick();
         this.intervalID = setInterval(this.tick, 1000);
-
-        this.finish();
     };
     tick = () => {
         // counts down timer by one tick
         this.timeLeft--;
-        console.log(this.timeLeft);
         this.timerCounter.innerText = this.toDisplay(this.timeLeft);
-        if (this.timeLeft <= 0) clearInterval(this.intervalID);
+        if (this.timeLeft <= 0) {
+            clearInterval(this.intervalID);
+            this.finish();
+        }
     };
     finish = () => {
         // TODO: refactor into promise format??? Used when finished
         console.log('FINISHED!!!');
-        started = false;
+        this.started = false;
+        this.timerCounter.innerText = this.toDisplay(this.initialTime);
+        this.timeLeft = this.initialTime;
+        // dispatch start event on button
+        this.timerStartButton.dispatchEvent(this.finishEvent);
     };
     toSeconds = (text) => {
         // toSeconds will translate display text to seconds
@@ -44,15 +59,7 @@ class Timer {
         displayMinutes = displayMinutes < 10 ? `0${displayMinutes}` : `${displayMinutes}`;
         let displaySeconds = seconds % 60;
         displaySeconds = displaySeconds < 10 ? `0${displaySeconds}` : `${displaySeconds}`;
-        // TODO: pad both sides with 0s
+
         return `${displayMinutes}:${displaySeconds}`;
     };
 }
-
-const timerCounter = document.querySelector('.timer__counter');
-const timerStartButton = document.querySelector('.btn--timer');
-
-const timer = new Timer(timerCounter, timerStartButton);
-
-console.log(timer.toSeconds('4:29'));
-console.log(timer.toDisplay(2));
