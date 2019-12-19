@@ -41,7 +41,9 @@ class Timer {
     toDisplay = (seconds) => {
         // toDisplay will translate seconds to display text
         let displayMinutes = Math.floor(seconds / 60);
+        displayMinutes = displayMinutes < 10 ? `0${displayMinutes}` : `${displayMinutes}`;
         let displaySeconds = seconds % 60;
+        displaySeconds = displaySeconds < 10 ? `0${displaySeconds}` : `${displaySeconds}`;
         // TODO: pad both sides with 0s
         return `${displayMinutes}:${displaySeconds}`;
     };
